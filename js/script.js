@@ -117,31 +117,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ===== TENTAR INICIAR A MÚSICA AUTOMATICAMENTE =====
 
-const audio = document.getElementById("loveSong");
 
-if (audio) {
+function configurarReproducaoAutomatica() {
+    const audio = document.getElementById("loveSong");
+
+    if (!audio) return;
+
     audio.volume = 0.7;
+    audio.preload = "auto";
 
-    function iniciarMusica() {
+    // Começa aos 50 segundos, se ainda estiver no início.
+    function ajustarInicio() {
+        if (audio.currentTime < 1 && audio.duration > 50) {
+            audio.currentTime = 50;
+        }
+    }
+
+    audio.addEventListener("loadedmetadata", ajustarInicio, {
+        once: true
+    });
+
+    if (audio.readyState >= 1) {
+        ajustarInicio();
+    }
+
+    // Tenta tocar automaticamente.
+    audio.play().catch(() => {
+        console.log("Aguardando o primeiro toque na tela.");
+    });
+
+    // No celular, o primeiro toque pode liberar a reprodução.
+    function iniciarNoToque() {
         if (audio.paused) {
-            audio.play().catch(() => {
-                console.log(
-                    "O navegador aguarda o primeiro toque do usuário."
-                );
+            ajustarInicio();
+
+            audio.play().catch((erro) => {
+                console.log("Não foi possível iniciar o áudio:", erro);
             });
         }
     }
 
-    // Tenta iniciar assim que o áudio estiver pronto.
-    audio.addEventListener("canplay", iniciarMusica, { once: true });
-
-    // Se a pessoa tocar na tela, tenta iniciar a música.
-    document.addEventListener("pointerdown", iniciarMusica, {
+    document.addEventListener("pointerdown", iniciarNoToque, {
         once: true
     });
 
-    // Se o áudio já estiver pronto, tenta imediatamente.
-    if (audio.readyState >= 2) {
-        iniciarMusica();
-    }
+    document.addEventListener("touchstart", iniciarNoToque, {
+        once: true,
+        passive: true
+    });
 }
+
+configurarReproducaoAutomatica();
