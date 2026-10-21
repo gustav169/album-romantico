@@ -115,4 +115,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// ===== TENTAR INICIAR A MÚSICA AUTOMATICAMENTE =====
 
+const audio = document.getElementById("loveSong");
+
+if (audio) {
+    audio.volume = 0.7;
+
+    function iniciarMusica() {
+        if (audio.paused) {
+            audio.play().catch(() => {
+                console.log(
+                    "O navegador aguarda o primeiro toque do usuário."
+                );
+            });
+        }
+    }
+
+    // Tenta iniciar assim que o áudio estiver pronto.
+    audio.addEventListener("canplay", iniciarMusica, { once: true });
+
+    // Se a pessoa tocar na tela, tenta iniciar a música.
+    document.addEventListener("pointerdown", iniciarMusica, {
+        once: true
+    });
+
+    // Se o áudio já estiver pronto, tenta imediatamente.
+    if (audio.readyState >= 2) {
+        iniciarMusica();
+    }
+}
