@@ -1,0 +1,782 @@
+/* =========================================
+   1. CONFIGURAÇÕES GERAIS
+========================================= */
+
+:root {
+    --vinho: #722f43;
+    --vinho-escuro: #451b2b;
+    --vinho-claro: #a45d70;
+    --dourado: #c5a77e;
+    --papel: #f8efdf;
+    --texto: #49332f;
+    --texto-claro: #81695e;
+    --sombra: rgba(45, 19, 25, 0.22);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--texto);
+    background:
+        radial-gradient(
+            circle at top,
+            #f8e8e3 0%,
+            #ead6d1 45%,
+            #ddc1bd 100%
+        );
+    overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* =========================================
+   2. CORAÇÕES ANIMADOS DO FUNDO
+========================================= */
+
+.background-hearts {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.background-hearts span {
+    position: absolute;
+    bottom: -60px;
+    color: rgba(114, 47, 67, 0.15);
+    font-size: 30px;
+    animation: floatHeart 15s linear infinite;
+}
+
+.background-hearts span:nth-child(1) {
+    left: 8%;
+}
+
+.background-hearts span:nth-child(2) {
+    left: 25%;
+    animation-delay: 3s;
+    font-size: 22px;
+}
+
+.background-hearts span:nth-child(3) {
+    left: 45%;
+    animation-delay: 6s;
+    font-size: 38px;
+}
+
+.background-hearts span:nth-child(4) {
+    left: 65%;
+    animation-delay: 2s;
+}
+
+.background-hearts span:nth-child(5) {
+    left: 82%;
+    animation-delay: 8s;
+    font-size: 25px;
+}
+
+.background-hearts span:nth-child(6) {
+    left: 94%;
+    animation-delay: 5s;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(35deg);
+        opacity: 0;
+    }
+}
+
+/* =========================================
+   3. CONTAINER E CABEÇALHO
+========================================= */
+
+.container {
+    position: relative;
+    z-index: 1;
+    width: min(100% - 32px, 1000px);
+    margin: 0 auto;
+    padding: 45px 0 30px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.subtitle {
+    color: var(--vinho);
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+}
+
+.header h1 {
+    font-family: "Great Vibes", cursive;
+    color: var(--vinho);
+    font-size: clamp(48px, 8vw, 76px);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.description {
+    margin-top: 12px;
+    font-size: 19px;
+    color: var(--texto-claro);
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* =========================================
+   4. ÁREA DO ÁLBUM
+========================================= */
+
+.album-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.book {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    height: 620px;
+    margin: 0 auto;
+    filter: drop-shadow(0 18px 22px var(--sombra));
+}
+
+/*
+   O PageFlip controla a animação das páginas.
+   Evite aplicar transform ou perspective diretamente
+   nas páginas individuais.
+*/
+
+.book .page {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--papel);
+    color: var(--texto);
+    border: 1px solid rgba(114, 47, 67, 0.18);
+}
+
+/* Textura suave de papel */
+
+.book .memory {
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(105, 74, 50, 0.018) 0,
+            rgba(105, 74, 50, 0.018) 1px,
+            transparent 1px,
+            transparent 4px
+        ),
+        var(--papel);
+}
+
+/* =========================================
+   5. CONTEÚDO DAS PÁGINAS
+========================================= */
+
+.page-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    padding: 24px 25px 28px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.memory-number {
+    display: block;
+    flex-shrink: 0;
+    color: var(--vinho-claro);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.memory h2 {
+    flex-shrink: 0;
+    width: 100%;
+    color: var(--vinho);
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(27px, 6vw, 36px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 14px;
+}
+
+/* =========================================
+   6. MOLDURAS E FOTOGRAFIAS
+========================================= */
+
+.photo-frame {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 270px;
+    min-height: 0;
+    flex-shrink: 1;
+    margin: 0 auto 14px;
+    padding: 7px;
+    background: #fffaf2;
+    border: 1px solid var(--dourado);
+    outline: 1px solid rgba(197, 167, 126, 0.35);
+    outline-offset: -4px;
+    box-shadow:
+        0 5px 15px rgba(69, 27, 43, 0.12),
+        0 1px 3px rgba(69, 27, 43, 0.08);
+    overflow: hidden;
+}
+
+/* Mantém a proporção original das fotografias */
+
+.photo-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 2px;
+    transition: transform 0.45s ease;
+}
+
+/* Zoom suave quando o mouse passa sobre a foto */
+
+@media (hover: hover) {
+    .photo-frame:hover img {
+        transform: scale(1.035);
+    }
+}
+
+/* =========================================
+   7. LEGENDAS, DATAS E CORAÇÕES
+========================================= */
+
+.caption {
+    width: 100%;
+    flex-shrink: 0;
+    color: var(--texto);
+    font-size: 15px;
+    line-height: 1.4;
+    font-style: italic;
+    margin: 0 auto 9px;
+}
+
+.date {
+    flex-shrink: 0;
+    color: var(--texto-claro);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    margin-top: auto;
+    padding-top: 5px;
+}
+
+.heart {
+    flex-shrink: 0;
+    color: var(--vinho-claro);
+    font-size: 18px;
+    margin-top: 8px;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+@keyframes heartBeat {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+.page-number {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    color: #a38b75;
+    font-size: 11px;
+}
+
+/* =========================================
+   8. CAPA DO ÁLBUM
+========================================= */
+
+.book .cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #f8eadb;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.08),
+            transparent 70%
+        ),
+        linear-gradient(
+            135deg,
+            #7f394f,
+            #4a1b2d 70%,
+            #361522
+        );
+    border: 8px double var(--dourado);
+}
+
+.cover-content {
+    width: 100%;
+    padding: 24px;
+}
+
+.small-heart {
+    display: block;
+    color: #e5c39c;
+    font-size: 34px;
+    margin-bottom: 18px;
+}
+
+.cover-subtitle {
+    color: #e9d0b6;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
+}
+
+.cover h2 {
+    color: #f8eadb;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(55px, 11vw, 76px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cover-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e5c39c;
+    margin: 16px auto;
+}
+
+.cover-text {
+    color: #f1dfcf;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.cover-number {
+    position: absolute;
+    right: 18px;
+    bottom: 15px;
+    color: #e5c39c;
+    font-size: 12px;
+}
+
+/* Botão da capa */
+
+.open-button {
+    display: inline-block;
+    margin-top: 26px;
+    padding: 12px 25px;
+    color: var(--vinho-escuro);
+    background: linear-gradient(135deg, #f4dfbd, #d7b786);
+    border: 1px solid #e8cda4;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.16);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.open-button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #fff0d5, #e3c49a);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.open-button:active {
+    transform: scale(0.97);
+}
+
+/* =========================================
+   9. CONTRACAPA
+========================================= */
+
+.book .back-cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    text-align: center;
+    color: #f8eadb;
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(255, 255, 255, 0.07),
+            transparent 75%
+        ),
+        linear-gradient(
+            145deg,
+            #7f394f,
+            #4a1b2d 70%,
+            #361522
+        );
+    border: 8px double var(--dourado);
+}
+
+.back-cover-content {
+    width: 100%;
+}
+
+.big-heart {
+    display: block;
+    color: #e5c39c;
+    font-size: 44px;
+    margin-bottom: 22px;
+}
+
+.back-cover h2 {
+    color: #f8eadb;
+    font-family: "Great Vibes", cursive;
+    font-size: 39px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 18px;
+}
+
+.back-cover p {
+    color: #f1dfcf;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.signature {
+    margin-top: 25px;
+    color: #e5c39c;
+    font-family: "Great Vibes", cursive;
+    font-size: 30px;
+}
+
+.restart-button {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 11px 23px;
+    color: #f8eadb;
+    background: transparent;
+    border: 1px solid var(--dourado);
+    border-radius: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.restart-button:hover {
+    color: var(--vinho-escuro);
+    background: #e5c39c;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   10. BOTÕES DE NAVEGAÇÃO
+========================================= */
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 28px auto 0;
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 125px;
+    padding: 12px 20px;
+    color: #fff8f0;
+    background: linear-gradient(
+        135deg,
+        var(--vinho),
+        var(--vinho-escuro)
+    );
+    border: 1px solid rgba(197, 167, 126, 0.75);
+    border-radius: 30px;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(69, 27, 43, 0.17);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(69, 27, 43, 0.24);
+}
+
+.nav-button:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.nav-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.page-indicator {
+    min-width: 75px;
+    color: var(--vinho);
+    font-size: 14px;
+    text-align: center;
+}
+
+/* =========================================
+   11. SEÇÃO DE MÚSICA
+========================================= */
+
+.music-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 35px auto 0;
+    text-align: center;
+}
+
+.music-heart {
+    color: var(--vinho);
+    font-size: 26px;
+    animation: heartBeat 2s ease-in-out infinite;
+}
+
+.music-section audio {
+    width: min(100%, 320px);
+    height: 40px;
+}
+
+.music-section p {
+    color: var(--texto-claro);
+    font-size: 15px;
+    font-style: italic;
+}
+
+/* =========================================
+   12. RODAPÉ
+========================================= */
+
+.footer {
+    position: relative;
+    z-index: 1;
+    padding: 25px 16px 30px;
+    color: var(--texto-claro);
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* =========================================
+   13. ACESSIBILIDADE
+========================================= */
+
+button:focus-visible {
+    outline: 3px solid var(--dourado);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =========================================
+   14. RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 600px) {
+    .container {
+        width: calc(100% - 24px);
+        padding-top: 30px;
+    }
+
+    .header {
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        font-size: 10px;
+        letter-spacing: 2.5px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+
+    .book {
+        width: 100%;
+        max-width: 390px;
+        height: 560px;
+    }
+
+    .page-content {
+        padding: 20px 16px 25px;
+    }
+
+    .memory-number {
+        font-size: 9px;
+        margin-bottom: 9px;
+    }
+
+    .memory h2 {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .photo-frame {
+        height: 235px;
+        margin-bottom: 11px;
+        padding: 6px;
+    }
+
+    .caption {
+        font-size: 14px;
+    }
+
+    .date {
+        font-size: 11px;
+    }
+
+    .cover-content {
+        padding: 18px;
+    }
+
+    .cover-subtitle {
+        font-size: 9px;
+        letter-spacing: 2px;
+    }
+
+    .cover-text {
+        font-size: 15px;
+    }
+
+    .back-cover {
+        padding: 18px;
+    }
+
+    .back-cover h2 {
+        font-size: 34px;
+    }
+
+    .back-cover p {
+        font-size: 14px;
+    }
+
+    .signature {
+        font-size: 27px;
+    }
+
+    .controls {
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .nav-button {
+        min-width: 110px;
+        padding: 11px 15px;
+        font-size: 14px;
+    }
+
+    .page-indicator {
+        min-width: 55px;
+        font-size: 12px;
+    }
+
+    .music-section {
+        margin-top: 28px;
+    }
+}
+
+@media (max-width: 360px) {
+    .book {
+        height: 520px;
+    }
+
+    .page-content {
+        padding: 16px 12px 24px;
+    }
+
+    .photo-frame {
+        height: 210px;
+    }
+
+    .memory h2 {
+        font-size: 27px;
+    }
+
+    .caption {
+        font-size: 13px;
+    }
+
+    .nav-button {
+        min-width: 95px;
+        padding: 10px 12px;
+    }
+}
+
